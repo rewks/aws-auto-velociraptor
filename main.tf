@@ -27,3 +27,14 @@ module "app" {
     admin_ips = var.admin_ips
     client_ips = var.client_ips
 }
+
+locals {
+    dfir_subdomain = "dfir-${var.deployment_name}.${var.dfir_domain}"
+}
+
+module "routing" {
+    source = "./modules/routing"
+    dfir_domain = var.dfir_domain
+    dfir_subdomain = local.dfir_subdomain
+    ec2_public_ip = module.app.ec2_public_ip
+}
