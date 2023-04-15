@@ -16,3 +16,11 @@ module "networking" {
     vpc_name_tag = var.vpc_name_tag
     subnet_name_tag = var.subnet_name_tag
 }
+
+module "app" {
+    source = "./modules/app"
+    ec2_size = var.ec2_size
+    ec2_ami = var.ec2_ami
+    dfir_vpc_id = module.networking.dfir_vpc_id
+    dfir_subnet_id = module.networking.dfir_subnet_id
+}
