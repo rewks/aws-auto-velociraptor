@@ -5,7 +5,3 @@ output "Velociraptor_Public_IP" {
 output "Velociraptor_Server_Domain" {
     value = local.dfir_subdomain
 }
-
-output "EFS_Private_DNS_Name" {
-    value = module.app.efs_dns_name
-}

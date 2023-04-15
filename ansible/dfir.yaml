@@ -2,7 +2,8 @@
   hosts: all
   remote_user: "velociraptor"
   vars_files:
-    - /vars/velociraptor_vars.yaml
+    - ./vars/velociraptor_vars.yaml
+    - ./vars/from_terraform.yaml
   vars_prompt:
     - name: username
       prompt: Admin username for Velociraptor GUI access?
@@ -10,10 +11,6 @@
 
     - name: password
       prompt: Password for the admin user?
-
-    - name: domain
-      prompt: DNS name for the server?
-      private: false
 
   roles:
   - system

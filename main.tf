@@ -38,3 +38,9 @@ module "routing" {
     dfir_subdomain = local.dfir_subdomain
     ec2_public_ip = module.app.ec2_public_ip
 }
+
+resource "local_file" "ansible-vars" {
+    filename = "./ansible/vars/from_terraform.yaml"
+    file_permission = "0664"
+    content = "domain: ${local.dfir_subdomain}\nefs_dns_name: ${module.app.efs_dns_name}"
+}
