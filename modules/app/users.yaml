@@ -1,4 +1,4 @@
-# cloud-config
+#cloud-config
 # Add user to the system and populate authorized_keys
 users:
   - name: velociraptor
