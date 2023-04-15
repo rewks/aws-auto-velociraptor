@@ -1,0 +1,26 @@
+- name: Create directory to store all Velociraptor binaries
+  file:
+    path: /home/velociraptor/clients
+    state: directory
+
+- name: Download linux x64 Velociraptor binary
+  get_url: url="{{ linux_x64 }}" dest=/home/velociraptor/clients/velociraptor-linux-amd64
+
+- name: Download windows x86 Velociraptor binary
+  get_url: url="{{ windows_x86 }}" dest=/home/velociraptor/clients/velociraptor-windows-x86.exe
+
+- name: Download windows x64 Velociraptor binary
+  get_url: url="{{ windows_x64 }}" dest=/home/velociraptor/clients/velociraptor-windows-x64.exe
+
+- name: Download darwin amd64 Velociraptor binary
+  get_url: url="{{ darwin_amd64 }}" dest=/home/velociraptor/clients/velociraptor-darwin-amd64
+
+- name: Download darwin arm64 Velociraptor binary
+  get_url: url="{{ darwin_arm64 }}" dest=/home/velociraptor/clients/velociraptor-darwin-arm64
+
+- name: Set linux Velociraptor binary as executable
+  command: chmod +x /home/velociraptor/clients/velociraptor-linux-amd64
+
+- name: Create symlink to linux Velociraptor binary
+  become: yes
+  command: ln -s /home/velociraptor/clients/velociraptor-linux-amd64 /usr/local/bin/velociraptor
