@@ -1,11 +1,11 @@
-output "Velociraptor Public IP" {
+output "Velociraptor_Public_IP" {
     value = module.app.ec2_public_ip
 }
 
-output "Velociraptor Server Domain" {
+output "Velociraptor_Server_Domain" {
     value = local.dfir_subdomain
 }
 
-output "EFS Private DNS Name" {
+output "EFS_Private_DNS_Name" {
     value = module.app.efs_dns_name
 }
