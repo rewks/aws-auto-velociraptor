@@ -50,16 +50,16 @@ resource "aws_security_group" "dfir-ec2-secgrp" {
     ingress {
         description = "Allow inbound GUI access from admin IPs"
         protocol = "tcp"
-        from_port = 8080
-        to_port = 8080
+        from_port = 9500
+        to_port = 9500
         cidr_blocks = var.admin_ips
     }
 
     ingress {
         description = "Allow inbound client connections from client IPs"
         protocol = "tcp"
-        from_port = 8081
-        to_port = 8081
+        from_port = 9501
+        to_port = 9501
         cidr_blocks = var.client_ips
     }
 }
