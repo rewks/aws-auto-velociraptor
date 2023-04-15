@@ -9,7 +9,7 @@ resource "tls_private_key" "dfir-priv-key" {
     ecdsa_curve = "P521"
 }
 
-resource "aws_key_pair" "dfir-pub_key" {
+resource "aws_key_pair" "dfir-pub-key" {
     key_name_prefix = "dfir-"
     public_key = tls_private_key.dfir-priv-key.public_key_openssh
 }
@@ -96,4 +96,25 @@ resource "aws_efs_mount_target" "dfir-efs-mount" {
     file_system_id = aws_efs_file_system.dfir-efs.id
     subnet_id = var.dfir_subnet_id
     security_groups = [aws_security_group.dfir-efs-secgrp.id]
+}
+
+##
+# Create EC2 instance, mount EFS and execute cloud-init script
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
+# 
+##
+resource "aws_instance" "dfir-ec2" {
+    depends_on = [
+        aws_efs_mount_target.dfir-efs-mount
+    ]
+    tags = {
+        Name = "dfir-EC2"
+    }
+
+    ami = var.ec2_ami
+    instance_type = var.ec2_size
+    subnet_id = var.dfir_subnet_id
+    vpc_security_group_ids = [aws_security_group.dfir-ec2-secgrp.id]
+    key_name = aws_key_pair.dfir-pub-key.key_name
+    associate_public_ip_address = true
 }
