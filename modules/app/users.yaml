@@ -1,0 +1,8 @@
+# cloud-config
+# Add user to the system and populate authorized_keys
+users:
+  - name: velociraptor
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ${dfir-pub-key}
