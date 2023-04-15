@@ -1,3 +1,6 @@
+# Generated SSH key directories
+**/.ssh/*
+
 # Local .terraform directories
 **/.terraform/*
 
