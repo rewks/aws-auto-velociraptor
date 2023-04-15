@@ -4,6 +4,11 @@ variable "aws_region" {
     default = "eu-west-2"
 }
 
+variable "deployment_name" {
+    description = "Unique name/id to use for this deployment"
+    type = string
+}
+
 ##
 # Networking module
 ##
@@ -47,3 +52,10 @@ variable "client_ips" {
     type = list(string)
 }
 
+##
+# Routing module
+##
+variable "dfir_domain" {
+    description = "The base domain name to be used for deployment (must have a hosted zone in Route53). A subdomain will be created pointing to the EC2 server"
+    type = string
+}

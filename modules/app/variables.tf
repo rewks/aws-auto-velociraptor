@@ -18,6 +18,11 @@ variable "dfir_subnet_id" {
     type = string
 }
 
+variable "deployment_name" {
+    description = "Unique name/id to use for this deployment"
+    type = string
+}
+
 variable "admin_ips" {
     description = "IP ranges for administrative access"
     type = list(string)

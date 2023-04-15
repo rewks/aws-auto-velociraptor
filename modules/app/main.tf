@@ -9,12 +9,12 @@ resource "tls_private_key" "dfir-priv-key" {
 }
 
 resource "aws_key_pair" "dfir-pub-key" {
-    key_name_prefix = "dfir-"
+    key_name = "dfir-${var.deployment_name}"
     public_key = tls_private_key.dfir-priv-key.public_key_openssh
 }
 
 resource "local_sensitive_file" "priv-key-out" {
-    filename = "./.ssh/dfir.pem"
+    filename = "./.ssh/${var.deployment_name}.pem"
     file_permission = "0600"
     content = tls_private_key.dfir-priv-key.private_key_openssh
 }
@@ -27,7 +27,7 @@ resource "local_sensitive_file" "priv-key-out" {
 resource "aws_security_group" "dfir-ec2-secgrp" {
     vpc_id = var.dfir_vpc_id
     tags = {
-        Name = "dfir-EC2-SG"
+        Name = "dfir-${var.deployment_name}-EC2-SG"
     }
 
     egress {
@@ -67,7 +67,7 @@ resource "aws_security_group" "dfir-ec2-secgrp" {
 resource "aws_security_group" "dfir-efs-secgrp" {
     vpc_id = var.dfir_vpc_id
     tags = {
-        Name = "dfir-EFS-SG"
+        Name = "dfir-${var.deployment_name}-EFS-SG"
     }
 
     ingress {
@@ -87,7 +87,7 @@ resource "aws_security_group" "dfir-efs-secgrp" {
 resource "aws_efs_file_system" "dfir-efs" {
     encrypted = true
     tags = {
-        Name = "dfir-EFS"
+        Name = "dfir-${var.deployment_name}-EFS"
     }
 }
 
@@ -100,11 +100,10 @@ resource "aws_efs_mount_target" "dfir-efs-mount" {
 ##
 # Create EC2 instance, mount EFS and execute cloud-init script
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
-# 
 ##
 resource "aws_instance" "dfir-ec2" {
     tags = {
-        Name = "dfir-EC2"
+        Name = "dfir-${var.deployment_name}-EC2"
     }
 
     ami = var.ec2_ami
