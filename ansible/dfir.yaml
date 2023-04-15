@@ -1,0 +1,7 @@
+- name: Configure Velociraptor server
+  hosts: all
+  remote_user: "velociraptor"
+
+  roles:
+  - system
+  - velociraptor
