@@ -17,3 +17,13 @@ variable "dfir_subnet_id" {
     description = "The id of the Subnet to place resources in"
     type = string
 }
+
+variable "admin_ips" {
+    description = "IP ranges for administrative access"
+    type = list(string)
+}
+
+variable "client_ips" {
+    description = "IP ranges client connections will originate from"
+    type = list(string)
+}

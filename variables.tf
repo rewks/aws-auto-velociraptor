@@ -36,3 +36,14 @@ variable "ec2_ami" {
     type = string
     default = "ami-09744628bed84e434"   # Ubuntu 22.04 LTS amd64 (eu-west-2), 20230325
 }
+
+variable "admin_ips" {
+    description = "IP ranges for administrative access"
+    type = list(string)
+}
+
+variable "client_ips" {
+    description = "IP ranges client connections will originate from"
+    type = list(string)
+}
+
