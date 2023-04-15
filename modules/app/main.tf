@@ -5,8 +5,7 @@
 # https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/sensitive_file
 ##
 resource "tls_private_key" "dfir-priv-key" {
-    algorithm = "ECDSA"
-    ecdsa_curve = "P521"
+    algorithm = "ED25519"
 }
 
 resource "aws_key_pair" "dfir-pub-key" {
