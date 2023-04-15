@@ -44,3 +44,9 @@ resource "local_file" "ansible-vars" {
     file_permission = "0664"
     content = "domain: ${local.dfir_subdomain}\nefs_dns_name: ${module.app.efs_dns_name}"
 }
+
+resource "local_file" "ansible-inventory" {
+    filename = "./ansible/hosts"
+    file_permission = "0664"
+    content = "${local.dfir_subdomain}"
+}

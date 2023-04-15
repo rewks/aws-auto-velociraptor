@@ -4,8 +4,6 @@
     update_cache: yes
     name:
       - nfs-common
-      - unzip
-      - net-tools
     state: latest
 
 - name: Create Velociraptor configs directory
