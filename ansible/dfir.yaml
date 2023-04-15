@@ -1,6 +1,15 @@
 - name: Configure Velociraptor server
   hosts: all
   remote_user: "velociraptor"
+  vars_files:
+    - /vars/velociraptor_vars.yaml
+  vars_prompt:
+    - name: username
+      prompt: Admin username for Velociraptor GUI access?
+      private: false
+
+    - name: password
+      prompt: Password for the admin user?
 
   roles:
   - system
