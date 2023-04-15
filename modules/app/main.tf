@@ -114,5 +114,5 @@ resource "aws_instance" "dfir-ec2" {
     vpc_security_group_ids = [aws_security_group.dfir-ec2-secgrp.id]
     key_name = aws_key_pair.dfir-pub-key.key_name
     associate_public_ip_address = true
-    user_data = templatefile("./users.yaml", { dfir-pub-key = tls_private_key.dfir-priv-key.public_key_openssh})
+    user_data = templatefile("${path.module}/users.yaml", { dfir-pub-key = tls_private_key.dfir-priv-key.public_key_openssh})
 }
