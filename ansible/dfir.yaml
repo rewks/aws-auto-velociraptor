@@ -11,6 +11,10 @@
     - name: password
       prompt: Password for the admin user?
 
+    - name: domain
+      prompt: DNS name for the server?
+      private: false
+
   roles:
   - system
   - velociraptor

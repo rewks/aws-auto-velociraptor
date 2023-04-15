@@ -24,3 +24,22 @@
 - name: Create symlink to linux Velociraptor binary
   become: yes
   command: ln -s /home/velociraptor/clients/velociraptor-linux-amd64 /usr/local/bin/velociraptor
+
+- name: Generate server configuration file
+  shell:
+    cmd: velociraptor config generate --merge='{"Client":{"server_urls":["https://{{ domain }}:9501/"], "use_self_signed_ssl":true},"GUI":{"public_url":"https://{{ domain }}:9500/","bind_address":"0.0.0.0","bind_port":9500,"use_plain_http":false},"Frontend":{"hostname":"{{ domain }}","bind_address":"0.0.0.0","bind_port":9501,"use_plain_http":false},"Datastore":{"location":"/opt/velociraptor","filestore_directory":"/opt/velociraptor"},"Logging":{"output_directory":"/opt/velociraptor/logs"}}' > /etc/velociraptor/server.config.yaml
+
+- name: Generate client configuration file
+  shell:
+    cmd: velociraptor config client -c /etc/velociraptor/server.config.yaml > /etc/velociraptor/client.config.yaml
+
+- name: Add administrator account
+  command: velociraptor user add --role=administrator {{ username }} {{ password }} -c /etc/velociraptor/server.config.yaml
+
+- name: Create the Velociraptor server installation package
+  become: yes
+  command: velociraptor -c /etc/velociraptor/server.config.yaml debian server --output=/root/velociraptor_server.deb
+
+- name: Install the Velociraptor server package
+  become: yes
+  command: dpkg -i /root/velociraptor_server.deb
